@@ -32,6 +32,7 @@ resource "oci_identity_policy" "admit_onboarding_policy" {
   statements = [
     "Define tenancy sysdigTenancy as ${local.sysdig_tenancy_ocid}",
     "Define group onboardingGroup as ${local.sysdig_onboarding_group_ocid}",
+    "Admit group onboardingGroup of tenancy sysdigTenancy to inspect tenancies in tenancy",
       var.compartment_ocid != "" ?
       "Admit group onboardingGroup of tenancy sysdigTenancy to read compartments in compartment ${data.oci_identity_compartment.compartment[0].name}"
       :
