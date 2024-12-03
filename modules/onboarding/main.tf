@@ -33,9 +33,9 @@ resource "oci_identity_policy" "admit_onboarding_policy" {
     "Define tenancy sysdigTenancy as ${local.sysdig_tenancy_ocid}",
     "Define group onboardingGroup as ${local.sysdig_onboarding_group_ocid}",
       var.compartment_ocid != "" ?
-      "Admit group onboardingGroup of tenancy sysdigTenancy to inspect compartments in compartment ${data.oci_identity_compartment.compartment[0].name}"
+      "Admit group onboardingGroup of tenancy sysdigTenancy to read compartments in compartment ${data.oci_identity_compartment.compartment[0].name}"
       :
-      "Admit group onboardingGroup of tenancy sysdigTenancy to inspect compartments in tenancy",
+      "Admit group onboardingGroup of tenancy sysdigTenancy to read compartments in tenancy",
   ]
 }
 
@@ -47,11 +47,9 @@ resource "oci_identity_policy" "admit_onboarding_policy" {
 resource "sysdig_secure_cloud_auth_account" "oracle_account" {
   enabled       = true
   provider_tenant_id = var.tenancy_ocid // tenancy ocid
+  // when compartmentID is not specified, default to the rootCompartmentOCID which is the same value as tenancyOCID
   provider_id = var.compartment_ocid == "" ? var.tenancy_ocid : var.compartment_ocid
-  // or the root compartment if not specified
   provider_type = "PROVIDER_ORACLECLOUD"
-
-  # TODO: add metadata back when https://github.com/draios/secure-backend/pull/38958 is merged
 
   component {
     type     = "COMPONENT_SERVICE_PRINCIPAL"
@@ -61,6 +59,7 @@ resource "sysdig_secure_cloud_auth_account" "oracle_account" {
       oci = {
         api_key = {
           user_id = local.sysdig_onboarding_user_ocid
+#           TODO: add policy_ocid to the metadata
         }
       }
     })

@@ -54,7 +54,6 @@ resource |
 | Name                                                                                    | Description                                                                                  | Type     | Default          | Required |
 |-----------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------|----------|------------------|:--------:|
 | <a name="input_is_organizational"></a> [is\_organizational](#input\_is\_organizational) | (Optional) True/False whether secure-for-cloud should be deployed in an organizational setup | `bool`   | `false`          |    no    |
-| <a name="input_region"></a> [region](#input\_region)                                    | (Optional) Default region for resource creation                                              | `string` | `"us-sanjose-1"` |    no    |
 | <a name="input_tenancy_ocid"></a> [tenancy\_ocid](#input\_tenancy\_ocid)                | (Required) Customer tenant OCID                                                              | `string` | n/a              |   yes    |
 | <a name="input_compartment_ocid"></a> [compartment\_ocid](#input\_compartment\_ocid)    | (Optional) Customer compartment OCID                                                         | `string` | `""`             |    no    |
 
