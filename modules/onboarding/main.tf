@@ -31,9 +31,9 @@ resource "oci_identity_policy" "admit_onboarding_policy" {
     "Define group onboardingGroup as ${data.sysdig_secure_trusted_oracle_app.onboarding.group_ocid}",
     "Admit group onboardingGroup of tenancy sysdigTenancy to inspect tenancies in tenancy",
       var.compartment_ocid != "" ?
-      "Admit group onboardingGroup of tenancy sysdigTenancy to read compartments in compartment ${data.oci_identity_compartment.compartment[0].name}"
+      "Admit group onboardingGroup of tenancy sysdigTenancy to inspect compartments in compartment ${data.oci_identity_compartment.compartment[0].name}"
       :
-      "Admit group onboardingGroup of tenancy sysdigTenancy to read compartments in tenancy",
+      "Admit group onboardingGroup of tenancy sysdigTenancy to inspect compartments in tenancy",
   ]
 }
 
