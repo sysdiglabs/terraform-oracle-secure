@@ -2,11 +2,8 @@
 # Fetch the data sources
 #-----------------------------------------------------------------------------------------
 
-# TODO: this needs to be updated once datasources are available
-locals {
-  sysdig_tenancy_ocid          = "ocid1.tenancy.oc1..aaaaaaaa26htcit3eytwicf3gavyqkgwr54cmdhuo3iim6i2vfetelnbayha"
-  sysdig_config_posture_group_ocid = "ocid1.group.oc1..aaaaaaaanutpcrbz5yklzmkqlnsfc36eyaav5i7rfuxmdiyglgtgyj3jelmq"
-  sysdig_config_posture_user_ocid = "ocid1.user.oc1..aaaaaaaajdn4twgdk4cxcx3alzrn6apuims2dlr2iqaritg764xim6l5jqea"
+data "sysdig_secure_trusted_oracle_app" "config_posture" {
+  name = "config_posture"
 }
 
 // compartment data to populate policies if onboarding a compartment
@@ -30,8 +27,8 @@ resource "oci_identity_policy" "admit_cspm_policy" {
   description    = "Config Posture policy to allow read all resources in tenant/compartment"
   compartment_id = var.tenancy_ocid
   statements = [
-    "Define tenancy sysdigTenancy as ${local.sysdig_tenancy_ocid}",
-    "Define group configPostureGroup as ${local.sysdig_config_posture_group_ocid}",
+    "Define tenancy sysdigTenancy as ${data.sysdig_secure_trusted_oracle_app.config_posture.tenancy_ocid}",
+    "Define group configPostureGroup as ${data.sysdig_secure_trusted_oracle_app.config_posture.group_ocid}",
       var.compartment_ocid != "" ?
       "Admit group configPostureGroup of tenancy sysdigTenancy to read all-resources in compartment ${data.oci_identity_compartment.compartment[0].name}" :
       "Admit group configPostureGroup of tenancy sysdigTenancy to read all-resources in tenancy",
@@ -49,7 +46,7 @@ resource "sysdig_secure_cloud_auth_account_component" "oracle_service_principal"
   service_principal_metadata = jsonencode({
     oci = {
       api_key = {
-        user_id = local.sysdig_config_posture_user_ocid
+        user_id = data.sysdig_secure_trusted_oracle_app.config_posture.user_ocid
       }
     }
   })

@@ -2,11 +2,8 @@
 # Fetch the data sources
 #-----------------------------------------------------------------------------------------
 
-# TODO: this needs to be updated once datasources are available
-locals {
-  sysdig_tenancy_ocid          = "ocid1.tenancy.oc1..aaaaaaaa26htcit3eytwicf3gavyqkgwr54cmdhuo3iim6i2vfetelnbayha"
-  sysdig_onboarding_group_ocid = "ocid1.group.oc1..aaaaaaaanutpcrbz5yklzmkqlnsfc36eyaav5i7rfuxmdiyglgtgyj3jelmq"
-  sysdig_onboarding_user_ocid  = "ocid1.user.oc1..aaaaaaaajdn4twgdk4cxcx3alzrn6apuims2dlr2iqaritg764xim6l5jqea"
+data "sysdig_secure_trusted_oracle_app" "onboarding" {
+  name = "onboarding"
 }
 
 // compartment data to populate policies if onboarding a compartment
@@ -30,8 +27,8 @@ resource "oci_identity_policy" "admit_onboarding_policy" {
   description    = "Onboarding policy to allow inspect compartments in tenant/compartment"
   compartment_id = var.tenancy_ocid
   statements = [
-    "Define tenancy sysdigTenancy as ${local.sysdig_tenancy_ocid}",
-    "Define group onboardingGroup as ${local.sysdig_onboarding_group_ocid}",
+    "Define tenancy sysdigTenancy as ${data.sysdig_secure_trusted_oracle_app.onboarding.tenancy_ocid}",
+    "Define group onboardingGroup as ${data.sysdig_secure_trusted_oracle_app.onboarding.group_ocid}",
     "Admit group onboardingGroup of tenancy sysdigTenancy to inspect tenancies in tenancy",
       var.compartment_ocid != "" ?
       "Admit group onboardingGroup of tenancy sysdigTenancy to read compartments in compartment ${data.oci_identity_compartment.compartment[0].name}"
@@ -46,11 +43,11 @@ resource "oci_identity_policy" "admit_onboarding_policy" {
 # (ensure it is called after all above cloud resources are created using explicit depends_on)
 #---------------------------------------------------------------------------------------------
 resource "sysdig_secure_cloud_auth_account" "oracle_account" {
-  enabled       = true
+  enabled            = true
   provider_tenant_id = var.tenancy_ocid // tenancy ocid
   // when compartmentID is not specified, default to the rootCompartmentOCID which is the same value as tenancyOCID
-  provider_id = var.compartment_ocid == "" ? var.tenancy_ocid : var.compartment_ocid
-  provider_type = "PROVIDER_ORACLECLOUD"
+  provider_id        = var.compartment_ocid == "" ? var.tenancy_ocid : var.compartment_ocid
+  provider_type      = "PROVIDER_ORACLECLOUD"
 
   component {
     type     = "COMPONENT_SERVICE_PRINCIPAL"
@@ -59,8 +56,8 @@ resource "sysdig_secure_cloud_auth_account" "oracle_account" {
     service_principal_metadata = jsonencode({
       oci = {
         api_key = {
-          user_id = local.sysdig_onboarding_user_ocid
-#           TODO: add policy_ocid to the metadata
+          user_id = data.sysdig_secure_trusted_oracle_app.onboarding.user_ocid
+          #           TODO: add policy_ocid to the metadata
         }
       }
     })
