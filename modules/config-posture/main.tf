@@ -30,7 +30,8 @@ resource "oci_identity_policy" "admit_cspm_policy" {
     "Define tenancy sysdigTenancy as ${data.sysdig_secure_trusted_oracle_app.config_posture.tenancy_ocid}",
     "Define group configPostureGroup as ${data.sysdig_secure_trusted_oracle_app.config_posture.group_ocid}",
       var.compartment_ocid != "" ?
-      "Admit group configPostureGroup of tenancy sysdigTenancy to read all-resources in compartment ${data.oci_identity_compartment.compartment[0].name}" :
+      "Admit group configPostureGroup of tenancy sysdigTenancy to read all-resources in compartment ${data.oci_identity_compartment.compartment[0].name}"
+      :
       "Admit group configPostureGroup of tenancy sysdigTenancy to read all-resources in tenancy",
   ]
 }
@@ -48,6 +49,9 @@ resource "sysdig_secure_cloud_auth_account_component" "oracle_service_principal"
       api_key = {
         user_id = data.sysdig_secure_trusted_oracle_app.config_posture.user_ocid
       }
+#       policy = {
+#         policy_id = oci_identity_policy.admit_onboarding_policy.id
+#       }
     }
   })
   depends_on = [
