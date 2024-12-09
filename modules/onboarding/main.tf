@@ -58,9 +58,9 @@ resource "sysdig_secure_cloud_auth_account" "oracle_account" {
         api_key = {
           user_id = data.sysdig_secure_trusted_oracle_app.onboarding.user_ocid
         }
-#         policy = {
-#           policy_id = oci_identity_policy.admit_onboarding_policy.id
-#         }
+        policy = {
+          policy_id = oci_identity_policy.admit_onboarding_policy.id
+        }
       }
     })
   }
