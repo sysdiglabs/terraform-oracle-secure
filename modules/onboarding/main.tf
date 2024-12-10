@@ -12,6 +12,12 @@ data "oci_identity_compartment" "compartment" {
   id    = var.compartment_ocid
 }
 
+// tenancy data if onboarding a tenancy
+data "oci_identity_tenancy" "tenancy" {
+  count      = var.compartment_ocid == "" ? 1 : 0
+  tenancy_id = var.tenancy_ocid
+}
+
 
 // random suffix for policy name
 resource "random_id" "suffix" {
@@ -48,6 +54,7 @@ resource "sysdig_secure_cloud_auth_account" "oracle_account" {
   // when compartmentID is not specified, default to the rootCompartmentOCID which is the same value as tenancyOCID
   provider_id        = var.compartment_ocid == "" ? var.tenancy_ocid : var.compartment_ocid
   provider_type      = "PROVIDER_ORACLECLOUD"
+  provider_alias     = var.compartment_ocid == "" ? data.oci_identity_tenancy.tenancy[0].name : data.oci_identity_compartment.compartment[0].name
 
   component {
     type     = "COMPONENT_SERVICE_PRINCIPAL"
