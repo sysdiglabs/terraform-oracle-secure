@@ -29,10 +29,7 @@ resource "oci_identity_policy" "admit_cspm_policy" {
   statements = [
     "Define tenancy sysdigTenancy as ${data.sysdig_secure_trusted_oracle_app.config_posture.tenancy_ocid}",
     "Define group configPostureGroup as ${data.sysdig_secure_trusted_oracle_app.config_posture.group_ocid}",
-      var.compartment_ocid != "" ?
-      "Admit group configPostureGroup of tenancy sysdigTenancy to read all-resources in compartment ${data.oci_identity_compartment.compartment[0].name}"
-      :
-      "Admit group configPostureGroup of tenancy sysdigTenancy to read all-resources in tenancy",
+    "Admit group configPostureGroup of tenancy sysdigTenancy to read all-resources in tenancy",
   ]
 }
 
