@@ -4,6 +4,9 @@ terraform {
       source  = "sysdiglabs/sysdig"
       version = "~> 1.42.0"
     }
+    oci = {
+      source = "oracle/oci"
+    }
   }
 }
 
