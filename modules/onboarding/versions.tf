@@ -6,7 +6,7 @@ terraform {
       version = "~> 1.42"
     }
     oci = {
-      source  = "hashicorp/oci"
+      source  = "oracle/oci"
     }
   }
 }
