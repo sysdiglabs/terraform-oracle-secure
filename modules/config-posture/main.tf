@@ -24,7 +24,7 @@ resource "random_id" "suffix" {
 
 resource "oci_identity_policy" "admit_cspm_policy" {
   name           = "AdmitSysdigSecureTenantConfigPosture-${random_id.suffix.hex}"
-  description    = "Config Posture policy to allow read all resources in tenant/compartment"
+  description    = "Config Posture admit policy to read all resources in tenant"
   compartment_id = var.tenancy_ocid
   statements = [
     "Define tenancy sysdigTenancy as ${data.sysdig_secure_trusted_oracle_app.config_posture.tenancy_ocid}",
