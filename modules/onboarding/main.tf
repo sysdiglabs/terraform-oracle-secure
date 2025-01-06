@@ -30,7 +30,7 @@ resource "random_id" "suffix" {
 
 resource "oci_identity_policy" "admit_onboarding_policy" {
   name           = "AdmitSysdigSecureTenantOnboarding-${random_id.suffix.hex}"
-  description    = "Onboarding policy to allow inspect compartments in tenant/compartment"
+  description    = "Onboarding admit policy to inspect all compartments in tenant"
   compartment_id = var.tenancy_ocid
   statements = [
     "Define tenancy sysdigTenancy as ${data.sysdig_secure_trusted_oracle_app.onboarding.tenancy_ocid}",
