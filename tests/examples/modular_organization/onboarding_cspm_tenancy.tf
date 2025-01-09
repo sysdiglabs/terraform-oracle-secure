@@ -27,6 +27,7 @@ module "onboarding" {
   source            = "../../../modules/onboarding"
   tenancy_ocid      = "<TENANCY_OCID>"
   is_organizational = true
+  region            = "<REGION>"
 }
 
 module "config-posture" {
@@ -35,6 +36,7 @@ module "config-posture" {
   tenancy_ocid             = module.onboarding.tenancy_ocid
   compartment_ocid         = module.onboarding.compartment_ocid
   is_organizational        = module.onboarding.is_organizational
+  region                   = module.onboarding.region
 }
 
 resource "sysdig_secure_cloud_auth_account_feature" "config_posture" {
