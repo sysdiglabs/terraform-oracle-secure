@@ -45,6 +45,7 @@ resource "sysdig_secure_cloud_auth_account_component" "oracle_service_principal"
     oci = {
       api_key = {
         user_id = data.sysdig_secure_trusted_oracle_app.config_posture.user_ocid
+        region = var.region
       }
       policy = {
         policy_id = oci_identity_policy.admit_cspm_policy.id

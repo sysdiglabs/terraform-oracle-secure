@@ -17,3 +17,8 @@ output "is_organizational" {
   value       = var.is_organizational
   description = "Boolean value to indicate if secure-for-cloud is deployed to an entire Oracle organization or not"
 }
+
+output "region" {
+  value = local.home_region[0]
+  description = "Customer home region"
+}

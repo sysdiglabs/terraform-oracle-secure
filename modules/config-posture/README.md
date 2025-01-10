@@ -13,11 +13,11 @@ The following resources will be created in each instrumented compartment/tenancy
 
 ## Requirements
 
-| Name                                                                      | Version |
-|---------------------------------------------------------------------------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.0 |
+| Name                                                                      | Version   |
+|---------------------------------------------------------------------------|-----------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.0  |
 | <a name="requirement_oci"></a> [oci](#requirement\_oci)                   | >= 6.19.0 |
-| <a name="requirement_sysdig"></a> [sysdig](#requirement\_sysdig)          | ~> 1.42 |
+| <a name="requirement_sysdig"></a> [sysdig](#requirement\_sysdig)          | ~> 1.42   |
 
 ## Providers
 
@@ -42,12 +42,12 @@ resource |
 
 ## Inputs
 
-| Name                                                                                                             | Description                                                                                                                           | Type     | Default          | Required |
-|------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|----------|------------------|:--------:|
-| <a name="input_is_organizational"></a> [is\_organizational](#input\_is\_organizational)                          | (Optional) True/False whether secure-for-cloud should be deployed in an organizational setup                                          | `bool`   | `false`          |    no    |
-| <a name="input_tenancy_ocid"></a> [tenancy\_ocid](#input\_tenancy\_ocid)                                         | (Required) Customer tenant OCID                                                                                                       | `string` | n/a              |   yes    |
-| <a name="input_compartment_ocid"></a> [compartment\_ocid](#input\_compartment\_ocid)                             | (Optional) Customer compartment OCID                                                                                                  | `string` | `""`             |    no    |
-| <a name="input_sysdig_secure_account_id"></a> [sysdig\_secure\_account\_id](#input\_sysdig\_secure\_account\_id) | (Required) ID of the Sysdig Cloud Account to enable Config Posture for (in case of organization, ID of the Sysdig management account) | `string` | n/a              |   yes    |
+| Name                                                                                                             | Description                                                                                                                           | Type     | Default | Required |
+|------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|----------|---------|:--------:|
+| <a name="input_is_organizational"></a> [is\_organizational](#input\_is\_organizational)                          | (Optional) True/False whether secure-for-cloud should be deployed in an organizational setup                                          | `bool`   | `false` |    no    |
+| <a name="input_tenancy_ocid"></a> [tenancy\_ocid](#input\_tenancy\_ocid)                                         | (Required) Customer tenant OCID                                                                                                       | `string` | n/a     |   yes    |
+| <a name="input_compartment_ocid"></a> [compartment\_ocid](#input\_compartment\_ocid)                             | (Optional) Customer compartment OCID                                                                                                  | `string` | `""`    |    no    |
+| <a name="input_sysdig_secure_account_id"></a> [sysdig\_secure\_account\_id](#input\_sysdig\_secure\_account\_id) | (Required) ID of the Sysdig Cloud Account to enable Config Posture for (in case of organization, ID of the Sysdig management account) | `string` | n/a     |   yes    |
 
 ## Outputs
 

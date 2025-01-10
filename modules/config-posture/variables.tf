@@ -19,3 +19,8 @@ variable "sysdig_secure_account_id" {
   type        = string
   description = "(Required) ID of the Sysdig Cloud Account to enable Config Posture for (in case of organization, ID of the Sysdig management account)"
 }
+
+variable "region" {
+  type = string
+  description = "(Required) Customer home region"
+}
