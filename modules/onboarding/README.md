@@ -56,7 +56,6 @@ resource |
 | <a name="input_is_organizational"></a> [is\_organizational](#input\_is\_organizational) | (Optional) True/False whether secure-for-cloud should be deployed in an organizational setup | `bool`   | `false` |    no    |
 | <a name="input_tenancy_ocid"></a> [tenancy\_ocid](#input\_tenancy\_ocid)                | (Required) Customer tenant OCID                                                              | `string` | n/a     |   yes    |
 | <a name="input_compartment_ocid"></a> [compartment\_ocid](#input\_compartment\_ocid)    | (Optional) Customer compartment OCID                                                         | `string` | `""`    |    no    |
-| <a name="input_region"></a> [region](#input\_region)                                    | (Required) Customer home region                                                              | `string` | n/a     |   yes    |
 
 ## Outputs
 
@@ -66,7 +65,6 @@ resource |
 | <a name="output_is_organizational"></a> [is\_organizational](#output\_is\_organizational)                          | Boolean value to indicate if secure-for-cloud is deployed as an organization |
 | <a name="output_tenancy_ocid"></a> [tenancy\_ocid](#output\_tenancy\_ocid)                                         | Customer tenant OCID                                                         |
 | <a name="output_compartment_ocid"></a> [compartment\_ocid](#output_compartment\_ocid)                              | Customer compartment OCID                                                    |
-| <a name="output_region"></a> [region](#output\_region)                                                             | Customer home region                                                         |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 

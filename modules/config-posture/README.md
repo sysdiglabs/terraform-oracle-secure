@@ -48,7 +48,6 @@ resource |
 | <a name="input_tenancy_ocid"></a> [tenancy\_ocid](#input\_tenancy\_ocid)                                         | (Required) Customer tenant OCID                                                                                                       | `string` | n/a     |   yes    |
 | <a name="input_compartment_ocid"></a> [compartment\_ocid](#input\_compartment\_ocid)                             | (Optional) Customer compartment OCID                                                                                                  | `string` | `""`    |    no    |
 | <a name="input_sysdig_secure_account_id"></a> [sysdig\_secure\_account\_id](#input\_sysdig\_secure\_account\_id) | (Required) ID of the Sysdig Cloud Account to enable Config Posture for (in case of organization, ID of the Sysdig management account) | `string` | n/a     |   yes    |
-| <a name="input_region"></a> [region](#input\_region)                                                             | (Required) Customer home region                                                                                                       | `string` | n/a     |   yes    |
 
 ## Outputs
 
