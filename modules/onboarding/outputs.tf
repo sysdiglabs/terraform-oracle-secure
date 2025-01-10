@@ -19,6 +19,6 @@ output "is_organizational" {
 }
 
 output "region" {
-  value = var.region
+  value = local.home_region[0]
   description = "Customer home region"
 }

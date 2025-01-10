@@ -15,8 +15,3 @@ variable "compartment_ocid" {
   description = "(Optional) Customer compartment OCID"
 }
 
-variable "region" {
-  type = string
-  description = "(Required) Customer home region"
-}
-

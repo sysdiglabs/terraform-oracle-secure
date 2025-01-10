@@ -27,7 +27,6 @@ module "onboarding" {
   source            = "../../../modules/onboarding"
   tenancy_ocid      = "<TENANCY_OCID>"
   is_organizational = true
-  region            = "<REGION>"
 }
 
 module "config-posture" {

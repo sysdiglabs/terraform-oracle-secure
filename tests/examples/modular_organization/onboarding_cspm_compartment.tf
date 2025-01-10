@@ -28,7 +28,6 @@ module "onboarding" {
   tenancy_ocid      = "<TENANCY_OCID>"
   compartment_ocid  = "<COMPARTMENT_OCID>"
   is_organizational = true
-  region            = "<REGION>"
 }
 
 module "config-posture" {

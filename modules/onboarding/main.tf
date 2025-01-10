@@ -1,3 +1,11 @@
+locals {
+  home_region = [
+    for subscription in data.oci_identity_region_subscriptions.test_region_subscriptions.region_subscriptions :
+    subscription.region_name
+    if subscription.is_home_region == true
+  ]
+}
+
 #-----------------------------------------------------------------------------------------
 # Fetch the data sources
 #-----------------------------------------------------------------------------------------
@@ -15,6 +23,11 @@ data "oci_identity_compartment" "compartment" {
 // tenancy data if onboarding a tenancy
 data "oci_identity_tenancy" "tenancy" {
   count      = var.compartment_ocid == "" ? 1 : 0
+  tenancy_id = var.tenancy_ocid
+}
+
+// tenancy region data
+data "oci_identity_region_subscriptions" "test_region_subscriptions" {
   tenancy_id = var.tenancy_ocid
 }
 
@@ -61,7 +74,7 @@ resource "sysdig_secure_cloud_auth_account" "oracle_account" {
       oci = {
         api_key = {
           user_id = data.sysdig_secure_trusted_oracle_app.onboarding.user_ocid
-          region  = var.region
+          region  = local.home_region[0]
         }
         policy = {
           policy_id = oci_identity_policy.admit_onboarding_policy.id
