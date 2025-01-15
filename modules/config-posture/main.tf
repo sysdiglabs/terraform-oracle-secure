@@ -58,7 +58,7 @@ resource "oci_identity_api_key" "cspm_user_api_key" {
 # Allow policy to allow user to read resources
 #-----------------------------------------------------------------------------------------
 
-resource "oci_identity_policy" "cspm_policy" {
+resource "oci_identity_policy" "allow_cspm_policy" {
   name           = "AllowSysdigSecureTenantConfigPosture-${random_id.suffix.hex}"
   description    = "Config Posture allow policy to read all resources in tenant"
   compartment_id = var.tenancy_ocid
@@ -94,11 +94,11 @@ resource "sysdig_secure_cloud_auth_account_component" "oracle_service_principal"
       api_key = {
         user_id     = oci_identity_user.cspm_user.id
         region      = var.region
-#         fingerprint = oci_identity_api_key.cspm_user_api_key.fingerprint
-#         private_key = (var.public_key_file_path == "" && var.private_key_file_path == "") ? base64encode(tls_private_key.rsa_key[0].private_key_pem) : base64encode(file(var.private_key_file_path))
+        fingerprint = oci_identity_api_key.cspm_user_api_key.fingerprint
+        private_key = (var.public_key_file_path == "" && var.private_key_file_path == "") ? base64encode(tls_private_key.rsa_key[0].private_key_pem) : base64encode(file(var.private_key_file_path))
       }
       policy = {
-        policy_id = oci_identity_policy.admit_cspm_policy.id
+        policy_id = oci_identity_policy.allow_cspm_policy.id
       }
     }
   })
