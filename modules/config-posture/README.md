@@ -4,7 +4,12 @@ This module will deploy Config Posture resources in Oracle for a compartment or 
 
 The following resources will be created in each instrumented compartment/tenancy:
 
-- An Admit Policy on the target tenant that will allow sysdig tenant to `read` all-resources in the specified
+- A User on the target tenant.
+- A Group on the target tenant.
+- A Group Membership between the User and Group created on the target tenant.
+- If customer wants, a private and public RSA key will be generated for the user. Customer can opt to pass files for
+  public and private keys.
+- An Allow Policy on the target tenant that will allow the User to `read` all-resources in the specified
   compartment/tenancy.
 - A cloud account component in the Sysdig Backend, associated with the specified compartment/tenant and with the
   required metadata to serve the Config Posture functions.
@@ -48,6 +53,8 @@ resource |
 | <a name="input_tenancy_ocid"></a> [tenancy\_ocid](#input\_tenancy\_ocid)                                         | (Required) Customer tenant OCID                                                                                                       | `string` | n/a     |   yes    |
 | <a name="input_compartment_ocid"></a> [compartment\_ocid](#input\_compartment\_ocid)                             | (Optional) Customer compartment OCID                                                                                                  | `string` | `""`    |    no    |
 | <a name="input_sysdig_secure_account_id"></a> [sysdig\_secure\_account\_id](#input\_sysdig\_secure\_account\_id) | (Required) ID of the Sysdig Cloud Account to enable Config Posture for (in case of organization, ID of the Sysdig management account) | `string` | n/a     |   yes    |
+| <a name="input_private_key_file_path"></a> [private\_key\_file\_path](#input\_private\_key\_file\_path)          | (Optional) Path to the private key file                                                                                               | `string` | n/a     |    no    |
+| <a name="input_public_key_file_path"></a> [public\_key\_file\_path](#input\_public\_key\_file\_path)             | (Optional) Path to the public key file                                                                                                | `string` | n/a     |    no    |
 
 ## Outputs
 

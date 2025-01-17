@@ -21,6 +21,24 @@ variable "sysdig_secure_account_id" {
 }
 
 variable "region" {
-  type = string
+  type        = string
   description = "(Required) Customer home region"
+}
+
+variable "private_key_file_path" {
+  description = "Path to the private key file"
+  type        = string
+  default     = ""
+}
+
+variable "public_key_file_path" {
+  description = "Path to the public key file"
+  type        = string
+  default     = ""
+}
+
+variable "email" {
+  description = "Email for user created on customer tenant"
+  type        = string
+  default     = "email@sysdig.com"
 }
