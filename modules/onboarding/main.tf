@@ -1,6 +1,6 @@
 locals {
   home_region = [
-    for subscription in data.oci_identity_region_subscriptions.test_region_subscriptions.region_subscriptions :
+    for subscription in data.oci_identity_region_subscriptions.region_subscriptions.region_subscriptions :
     subscription.region_name
     if subscription.is_home_region == true
   ]
@@ -27,7 +27,7 @@ data "oci_identity_tenancy" "tenancy" {
 }
 
 // tenancy region data
-data "oci_identity_region_subscriptions" "test_region_subscriptions" {
+data "oci_identity_region_subscriptions" "region_subscriptions" {
   tenancy_id = var.tenancy_ocid
 }
 

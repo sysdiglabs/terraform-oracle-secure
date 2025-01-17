@@ -11,8 +11,6 @@ The following resources will be created in each instrumented compartment/tenancy
   public and private keys.
 - An Allow Policy on the target tenant that will allow the User to `read` all-resources in the specified
   compartment/tenancy.
-- An Admit Policy on the target tenant that will allow sysdig tenant to `read` all-resources in the specified
-  compartment/tenancy.
 - A cloud account component in the Sysdig Backend, associated with the specified compartment/tenant and with the
   required metadata to serve the Config Posture functions.
 

@@ -2,10 +2,6 @@
 # Fetch the data sources
 #-----------------------------------------------------------------------------------------
 
-data "sysdig_secure_trusted_oracle_app" "config_posture" {
-  name = "config_posture"
-}
-
 // compartment data to populate policies if onboarding a compartment
 data "oci_identity_compartment" "compartment" {
   count = var.compartment_ocid != "" ? 1 : 0
@@ -66,20 +62,6 @@ resource "oci_identity_policy" "allow_cspm_policy" {
     "Allow group ${oci_identity_group.cspm_group.name} to read all-resources in tenancy",
   ]
 }
-#-----------------------------------------------------------------------------------------
-# Admit policy to allow Sysdig Tenant to read resources
-#-----------------------------------------------------------------------------------------
-
-resource "oci_identity_policy" "admit_cspm_policy" {
-  name           = "AdmitSysdigSecureTenantConfigPosture-${random_id.suffix.hex}"
-  description    = "Config Posture admit policy to read all resources in tenant"
-  compartment_id = var.tenancy_ocid
-  statements = [
-    "Define tenancy sysdigTenancy as ${data.sysdig_secure_trusted_oracle_app.config_posture.tenancy_ocid}",
-    "Define group configPostureGroup as ${data.sysdig_secure_trusted_oracle_app.config_posture.group_ocid}",
-    "Admit group configPostureGroup of tenancy sysdigTenancy to read all-resources in tenancy",
-  ]
-}
 
 #--------------------------------------------------------------------------------------------------------------
 # Call Sysdig Backend to add the service-principal integration for Config Posture to the Sysdig Cloud Account
@@ -103,6 +85,6 @@ resource "sysdig_secure_cloud_auth_account_component" "oracle_service_principal"
     }
   })
   depends_on = [
-    oci_identity_policy.admit_cspm_policy
+    oci_identity_policy.allow_cspm_policy
   ]
 }
