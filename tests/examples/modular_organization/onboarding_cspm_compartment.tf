@@ -17,9 +17,7 @@ provider "sysdig" {
 
 provider "oci" {
   tenancy_ocid     = "<TENANCY_OCID>"
-  user_ocid        = "<USER_OCID>"
-  fingerprint      = "<FINGERPRINT>"
-  private_key_path = "<PRIVATE_KEY_PATH>"
+  config_file_profile = "DEFAULT"
   region           = "<REGION>"
 }
 
