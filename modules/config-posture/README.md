@@ -22,7 +22,7 @@ The following resources will be created in each instrumented compartment/tenancy
 |---------------------------------------------------------------------------|-----------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.0  |
 | <a name="requirement_oci"></a> [oci](#requirement\_oci)                   | >= 6.19.0 |
-| <a name="requirement_sysdig"></a> [sysdig](#requirement\_sysdig)          | ~> 1.42   |
+| <a name="requirement_sysdig"></a> [sysdig](#requirement\_sysdig)          | ~> 3.3    |
 
 ## Providers
 

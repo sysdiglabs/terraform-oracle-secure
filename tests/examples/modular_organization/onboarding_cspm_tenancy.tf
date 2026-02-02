@@ -2,7 +2,7 @@ terraform {
   required_providers {
     sysdig = {
       source  = "sysdiglabs/sysdig"
-      version = "~> 1.46.0"
+      version = "~> 3.3"
     }
     oci = {
       source = "oracle/oci"
