@@ -86,7 +86,8 @@ resource "sysdig_secure_cloud_auth_account" "oracle_account" {
   }
 
   lifecycle {
-    # features and components are managed outside this module
+    # features and other modules' components are managed outside this module; the onboarding
+    # component is kept up to date by sysdig_secure_cloud_auth_account_component.onboarding_service_principal
     ignore_changes = [
       component,
       feature
