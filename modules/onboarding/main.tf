@@ -4,6 +4,18 @@ locals {
     subscription.region_name
     if subscription.is_home_region == true
   ]
+
+  onboarding_service_principal_metadata = jsonencode({
+    oci = {
+      api_key = {
+        user_id = data.sysdig_secure_trusted_oracle_app.onboarding.user_ocid
+        region  = local.home_region[0]
+      }
+      policy = {
+        policy_id = oci_identity_policy.admit_onboarding_policy.id
+      }
+    }
+  })
 }
 
 #-----------------------------------------------------------------------------------------
@@ -67,20 +79,10 @@ resource "sysdig_secure_cloud_auth_account" "oracle_account" {
   provider_alias     = var.compartment_ocid == "" ? data.oci_identity_tenancy.tenancy[0].name : data.oci_identity_compartment.compartment[0].name
 
   component {
-    type     = "COMPONENT_SERVICE_PRINCIPAL"
-    instance = "secure-onboarding"
-    version  = "v0.1.0"
-    service_principal_metadata = jsonencode({
-      oci = {
-        api_key = {
-          user_id = data.sysdig_secure_trusted_oracle_app.onboarding.user_ocid
-          region  = local.home_region[0]
-        }
-        policy = {
-          policy_id = oci_identity_policy.admit_onboarding_policy.id
-        }
-      }
-    })
+    type                       = "COMPONENT_SERVICE_PRINCIPAL"
+    instance                   = "secure-onboarding"
+    version                    = "v0.1.0"
+    service_principal_metadata = local.onboarding_service_principal_metadata
   }
 
   lifecycle {
@@ -93,4 +95,18 @@ resource "sysdig_secure_cloud_auth_account" "oracle_account" {
   depends_on = [
     oci_identity_policy.admit_onboarding_policy
   ]
+}
+
+#---------------------------------------------------------------------------------------------
+# Keep the onboarding component in sync with the trusted onboarding user and its admit policy
+#---------------------------------------------------------------------------------------------
+# The account ignores component changes, because other modules add their own components to it.
+# This resource carries later changes of the onboarding user, e.g. when Sysdig switches it;
+# cloudauth upserts the component, so existing accounts move over on the next apply.
+resource "sysdig_secure_cloud_auth_account_component" "onboarding_service_principal" {
+  account_id                 = sysdig_secure_cloud_auth_account.oracle_account.id
+  type                       = "COMPONENT_SERVICE_PRINCIPAL"
+  instance                   = "secure-onboarding"
+  version                    = "v0.1.0"
+  service_principal_metadata = local.onboarding_service_principal_metadata
 }

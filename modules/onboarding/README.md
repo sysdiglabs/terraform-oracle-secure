@@ -46,6 +46,8 @@ data source |
 resource |
 | [sysdig_secure_cloud_auth_account.oracle_account](https://registry.terraform.io/providers/sysdiglabs/sysdig/latest/docs/resources/secure_cloud_auth_account) |
 resource |
+| [sysdig_secure_cloud_auth_account_component.onboarding_service_principal](https://registry.terraform.io/providers/sysdiglabs/sysdig/latest/docs/resources/secure_cloud_auth_account_component) |
+resource |
 | [sysdig_secure_organization.oracle_organization](https://registry.terraform.io/providers/sysdiglabs/sysdig/latest/docs/resources/secure_organization) |
 resource |
 
