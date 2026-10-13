@@ -7,6 +7,7 @@ resource "sysdig_secure_organization" "oracle_organization" {
   management_account_id = sysdig_secure_cloud_auth_account.oracle_account.id
   depends_on = [
     oci_identity_policy.admit_onboarding_policy,
-    sysdig_secure_cloud_auth_account.oracle_account
+    sysdig_secure_cloud_auth_account.oracle_account,
+    sysdig_secure_cloud_auth_account_component.onboarding_service_principal
   ]
 }

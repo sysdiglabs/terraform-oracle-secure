@@ -15,6 +15,9 @@ Note:
 
 - The outputs from the foundational module, such as `sysdig_secure_account_id` are needed as inputs to the other
   features/integrations modules for subsequent modular installations.
+- Do not downgrade this module to a version without the
+  `sysdig_secure_cloud_auth_account_component.onboarding_service_principal` resource: Terraform would destroy it,
+  which removes the onboarding component from the Sysdig cloud account.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
@@ -24,7 +27,7 @@ Note:
 |---------------------------------------------------------------------------|-----------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.0  |
 | <a name="requirement_oci"></a> [oci](#requirement\_oci)                   | >= 6.19.0 |
-| <a name="requirement_sysdig"></a> [sysdig](#requirement\_sysdig)          | ~> 3.3    |
+| <a name="requirement_sysdig"></a> [sysdig](#requirement\_sysdig)          | >= 3.11.2, < 4.0.0 |
 
 ## Providers
 
@@ -45,6 +48,8 @@ data source |
 | [oci_identity_policy.admit_onboarding_policy](https://registry.terraform.io/providers/oracle/oci/latest/docs/resources/identity_policy) |
 resource |
 | [sysdig_secure_cloud_auth_account.oracle_account](https://registry.terraform.io/providers/sysdiglabs/sysdig/latest/docs/resources/secure_cloud_auth_account) |
+resource |
+| [sysdig_secure_cloud_auth_account_component.onboarding_service_principal](https://registry.terraform.io/providers/sysdiglabs/sysdig/latest/docs/resources/secure_cloud_auth_account_component) |
 resource |
 | [sysdig_secure_organization.oracle_organization](https://registry.terraform.io/providers/sysdiglabs/sysdig/latest/docs/resources/secure_organization) |
 resource |
